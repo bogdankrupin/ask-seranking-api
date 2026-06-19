@@ -38,16 +38,31 @@ END_MARKER = "<!-- AUTO-GENERATED:END -->"
 
 DOC_PATH_RE = re.compile(r"^https://seranking\.com/api(/|\.html|$)")
 
+# Navigation/marketing labels that point into /api paths but are not real doc entries.
+JUNK_TITLES = {
+    "stub", "SEO API", "Sign in", "Start free trial", "Back",
+    "Request a demo", "API", "Introduction",
+}
+
 
 def fetch_sidebar_links(html):
     """Return ordered, de-duplicated (title, url) documentation links."""
     soup = BeautifulSoup(html, "html.parser")
     seen = set()
     links = []
+    api_html_added = False
     for a in soup.find_all("a", href=True):
         url = urljoin(INDEX_URL, a["href"].strip())
         title = " ".join(a.get_text(" ", strip=True).split())
         if not title or not DOC_PATH_RE.match(url):
+            continue
+        # Collapse all nav links to the index page into a single clean "Introduction" row.
+        if url.rstrip("/") == "https://seranking.com/api.html".rstrip("/"):
+            if api_html_added:
+                continue
+            title = "Introduction"
+            api_html_added = True
+        elif title in JUNK_TITLES:
             continue
         key = (title, url)
         if key in seen:
