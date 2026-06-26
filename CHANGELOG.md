@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-06-26
+
+### Changed
+- **Renamed the skill from `se-ranking-api-docs` to `ask-seranking-api`** (and renamed
+  the repository to match). This changes the skill's `name` identifier, so existing
+  installs must be removed and reinstalled from the new `ask-seranking-api.skill` asset.
+  No behavior changes — the answer-and-cite workflow, documentation map, and weekly
+  auto-refresh are identical to v1.0.0.
+
 ## [1.0.0] - 2026-06-19
 
 First public release of the SE Ranking API & MCP documentation skill for Claude.
@@ -30,5 +39,6 @@ a verbatim citation to the exact official documentation section.
 - `.github/workflows/refresh-doc-map.yml` — GitHub Action that refreshes the map weekly
   (and on demand) and commits any changes.
 
-[Unreleased]: https://github.com/bogdankrupin/ask-seranking-api/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/bogdankrupin/ask-seranking-api/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/bogdankrupin/ask-seranking-api/releases/tag/v2.0.0
 [1.0.0]: https://github.com/bogdankrupin/ask-seranking-api/releases/tag/v1.0.0
